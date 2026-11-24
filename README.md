@@ -22,3 +22,11 @@ python starter.py
 ```
 
 Terminals 2 and 3 run inside `temporal-fibonacci-demo` with `source .venv/bin/activate`.
+
+## Workshop exercise
+
+The hands-on exercise for participants is in [`temporal-exercise/`](temporal-exercise/README.md). It only needs Docker Desktop.
+
+## Sources
+
+All sources are listed in [`temporal-sources.md`](temporal-sources.md).

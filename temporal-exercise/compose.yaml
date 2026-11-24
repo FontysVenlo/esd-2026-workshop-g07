@@ -1,0 +1,31 @@
+services:
+  temporal:
+    image: temporalio/temporal:1.10.1
+    command: server start-dev --ip 0.0.0.0
+    ports:
+      - "7233:7233"
+      - "8233:8233"
+
+  worker:
+    build: .
+    command: python worker.py
+    volumes:
+      - .:/exercise
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+      PYTHONUNBUFFERED: "1"
+    init: true
+    depends_on:
+      - temporal
+
+  order:
+    build: .
+    entrypoint: ["python", "starter.py"]
+    volumes:
+      - .:/exercise
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+      PYTHONUNBUFFERED: "1"
+    profiles: ["client"]
+    depends_on:
+      - temporal

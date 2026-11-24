@@ -12,6 +12,7 @@ with workflow.unsafe.imports_passed_through():
 class PizzaWorkflow:
     @workflow.run
     async def run(self, order: PizzaOrder) -> str:
-        # TODO step 1: paste the code from the README here
+#Paste
+
 
         return f"{order.order_id}: delivered"

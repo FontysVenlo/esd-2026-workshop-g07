@@ -36,5 +36,5 @@ async def bake_pizza(order: PizzaOrder) -> None:
 async def deliver_pizza(order: PizzaOrder) -> None:
     attempt = activity.info().attempt
     print(f"[deliver_pizza] Delivering {order.order_id}... (attempt {attempt})")
-    await asyncio.sleep(8)
+    await asyncio.sleep(15)
     print(f"[deliver_pizza] Delivered {order.order_id}")

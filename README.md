@@ -33,7 +33,7 @@ Words you will meet:
 - **Workflow:** the recipe: which step runs when. It's in `workflows.py`. **This is the only file you change.**
 - **Worker:** the program that runs your workflow and activities. It runs in a Docker container.
 - **Temporal Service:** remembers every finished step in the **Event History**. It runs in another Docker container and has a Web UI at http://localhost:8233.
-- **Docker container:** a ready-made mini computer on your laptop. You don't install anything yourself.
+- **Docker container:** a mini computer on your laptop. You don't install anything yourself.
 
 ## Before you start the exercise 
 
@@ -66,9 +66,10 @@ docker compose up -d --build
 
 ## Step 1: Write the workflow
 
-Open `workflows.py`. Replace the line `# TODO step 1: paste the code from the README here` with this code (keep the indentation):
+Open `workflows.py` and paste the code below:
 
 ```python
+        #Code
         await workflow.execute_activity(
             charge_card,
             order,
@@ -82,7 +83,7 @@ Open `workflows.py`. Replace the line `# TODO step 1: paste the code from the RE
         await workflow.execute_activity(
             deliver_pizza,
             order,
-            start_to_close_timeout=timedelta(seconds=15),
+            start_to_close_timeout=timedelta(seconds=20),
         )
 ```
 
@@ -109,11 +110,11 @@ Watch **terminal 1**. You should see something like this:
 [deliver_pizza] Delivered pizza-1432
 ```
 
-After about 15 seconds, terminal 2 prints `Result: pizza-1432: delivered` (your order number is different).
+After about 25 seconds, terminal 2 prints `Result: pizza-1432: delivered` (your order number is different).
 
 Now open the link that terminal 2 printed (or click your order in the Web UI) and look at the **Event History**: every step of your order, with its result.
 
-**Note:**
+**Think about:**
 - How many times did `bake_pizza` run? Who made it try again? Did you write a retry loop?
 
 ## Step 2: Pull the plug 
@@ -134,9 +135,9 @@ Now you crash the worker in the middle of an order.
      docker compose restart worker
      ```
 
-Keep watching **terminal 1**. You will see `Worker started` and, after about 15 seconds, `Delivering pizza-... (attempt 2)` and then `Delivered`. Open the order in the Web UI: its status is **Completed**.
+Keep watching **terminal 1** (if the log stopped, run `docker compose logs -f worker` again). You will see `Worker started` and, within about 20 seconds, `Delivering pizza-... (attempt 2)` and then `Delivered`. Open the order in the Web UI: its status is **Completed**.
 
-**Note:**
+**Think about:**
 - Look at the log in terminal 1. For this order, how many times was the card charged? How many times was the pizza baked?
 - Why didn't the new worker start again from the beginning?
 - Why did it take a few seconds before the delivery was tried again?
@@ -152,7 +153,7 @@ Keep watching **terminal 1**. You will see `Worker started` and, after about 15 
 2. Watch **terminal 1**: `Card declined (attempt 1)`, `(attempt 2)`, `(attempt 3)`... with longer and longer waits in between. By default, Temporal retries a failed activity **forever**. That's great for a short network problem, but a declined card will never work.
 3. Press `Ctrl+C` in **terminal 2**. The order is still retrying inside Temporal: you can see it in the Web UI.
 
-Now fix it. In `workflows.py`, replace the **first** `execute_activity` (the one for `charge_card`) with this code:
+Now fix it. In `workflows.py`, replace the **first** `execute_activity` with this code (careful for indentation):
 
 ```python
         try:
@@ -175,7 +176,7 @@ docker compose run --rm order declined
 
 Terminal 2 now prints `Result: pizza-declined: cancelled, the card was declined`. (Placing the order again automatically replaces the old one that was still retrying.)
 
-**Note:**
+**Think about:**
 - What is one error that *should* be retried, and one that should *not*.
 
 ## Done early?

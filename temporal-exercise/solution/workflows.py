@@ -29,7 +29,7 @@ class PizzaWorkflow:
         await workflow.execute_activity(
             deliver_pizza,
             order,
-            start_to_close_timeout=timedelta(seconds=15),
+            start_to_close_timeout=timedelta(seconds=20),
         )
 
         return f"{order.order_id}: delivered"

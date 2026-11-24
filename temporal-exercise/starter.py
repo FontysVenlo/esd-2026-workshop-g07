@@ -26,7 +26,6 @@ async def main():
         order,
         id=order.order_id,
         task_queue="pizza",
-        # placing the declined order again replaces the old one that is still retrying
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
     )
     print(f"Order placed: {order.order_id}")
@@ -42,3 +41,4 @@ if __name__ == "__main__":
         asyncio.run(main())
     except KeyboardInterrupt:
         print("Stopped waiting. The order is still in Temporal.")
+        os._exit(0)

@@ -35,7 +35,7 @@ Words you will meet:
 - **Temporal Service:** remembers every finished step in the **Event History**. It runs in another Docker container and has a Web UI at http://localhost:8233.
 - **Docker container:** a ready-made mini computer on your laptop. You don't install anything yourself.
 
-## Before you start
+## Before you start the exercise 
 
 1. Start **Docker Desktop**.
 2. Clone this repository and open a terminal in the `temporal-exercise` folder:
@@ -138,8 +138,8 @@ Keep watching **terminal 1**. You will see `Worker started` and, after about 15 
 
 **Note:**
 - Look at the log in terminal 1. For this order, how many times was the card charged? How many times was the pizza baked?
-- Why didn't the new worker start again from the beginning? (Hint: Event History.)
-- Why did it take a few seconds before the delivery was tried again? (Hint: `start_to_close_timeout`.)
+- Why didn't the new worker start again from the beginning?
+- Why did it take a few seconds before the delivery was tried again?
 
 ## Step 3: A declined card
 

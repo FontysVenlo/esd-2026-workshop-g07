@@ -17,8 +17,12 @@ temporal server start-dev
 # terminal 2: worker (Ctrl+C to stop it, run again to restart)
 python worker.py
 
+.venv\Scripts\python.exe worker.py
+
 # terminal 3: start the workflow
 python starter.py
+
+.venv\Scripts\python.exe starter.py
 ```
 
 Terminals 2 and 3 run inside `temporal-fibonacci-demo` with `source .venv/bin/activate`.
